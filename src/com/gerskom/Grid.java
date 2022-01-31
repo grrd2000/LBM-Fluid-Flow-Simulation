@@ -23,7 +23,7 @@ public class Grid {
     private static final double initRo = 1d;
     private static final double initUx = 0.0d;
     private static final double initUy = 0.0d;
-    private static final double borderUxMax = 0.45d;
+    private static final double borderUxMax = 0.15d;
     private static final double borderUyMax = 0.0d;
 
     Grid(int width, int height) {
@@ -195,15 +195,15 @@ public class Grid {
     }
 
     private void initBoundaries(int x, int y) {
-        //if (x <= borderSize || x >= width - borderSize - 1 || y <= borderSize || y >= height - borderSize - 1) {
-        //    dataTable[x][y][1] = (1d * y / (height - borderSize)) * borderUxMax;
-        //}
+        if (x <= borderSize || x >= width - borderSize - 1 || y <= borderSize || y >= height - borderSize - 1) {
+            dataTable[x][y][1] = (1d * y / (height - borderSize)) * borderUxMax;
+        }
         //if (x <= borderSize || y <= borderSize || y >= height - borderSize - 1) {
         //    dataTable[x][y][1] = borderUxMax;
         //}
-        if (x <= borderSize && y > borderSize + 50 && y < height - borderSize - 50) {
-            dataTable[x][y][1] = borderUxMax;
-        }
+        //if (x <= borderSize && y > borderSize + 50 && y < height - borderSize - 50) {
+        //    dataTable[x][y][1] = borderUxMax;
+        //}
         else dataTable[x][y][1] = 0d;
 
         dataTable[x][y][2] = borderUyMax;

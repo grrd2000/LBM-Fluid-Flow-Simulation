@@ -13,7 +13,6 @@ import java.util.concurrent.Executors;
 
 public class SimulationPanel extends JPanel {
     public final Grid grid;
-    public double[][] tmpData;
     public boolean started = false;
 
     private static final int THREADS = 4;
@@ -116,6 +115,11 @@ public class SimulationPanel extends JPanel {
             //try { customExport(); }
             //catch (IOException ex) { ex.printStackTrace(); }
 
+            if (i % 12 == 0 ) {
+                try { exportFrame(); }
+                catch (IOException ex) { ex.printStackTrace(); }
+            }
+
             firstTime = System.nanoTime();
 
             i++;
@@ -168,18 +172,25 @@ public class SimulationPanel extends JPanel {
         for(int x = 0; x < grid.width; x++){
             for(int y = 0; y < grid.height; y++){
                 if(Grid.wallTable[x][y] != Grid.wall && Grid.wallTable[x][y] != Grid.obstacle) {
-                    double color = (grid.dataTable[x][y][opt] * 255f * m);
+                    //double color = (grid.dataTable[x][y][opt] * 255f * m);
+                    double v = (grid.dataTable[x][y][1] + grid.dataTable[x][y][2]) / 2;
+                    double color = (v * 255f * m);
 
                     if (color > 254.5d) color = 255;
                     else if (color < -254.5d) color = -255;
                     if (color > -0.002 && color < 0.002)
                         color = 0;
 
-                    if(grid.dataTable[x][y][opt] >= 0)
+                    if(color >= 0)
                         g2D.setColor(new Color((int)color, 0, 0));
 
-                    else if(grid.dataTable[x][y][opt] < 0)
+                    else if(color < 0)
                         g2D.setColor(new Color(0, 0, (int)-color));
+
+                        //if(grid.dataTable[x][y][opt] >= 0)
+                        //    g2D.setColor(new Color((int)color, 0, 0));
+                        //else if(grid.dataTable[x][y][opt] < 0)
+                        //    g2D.setColor(new Color(0, 0, (int)-color));
                     else
                         g2D.setColor(Color.PINK);
                 }
@@ -193,13 +204,13 @@ public class SimulationPanel extends JPanel {
         }
         g2D.dispose();
 
-        String formatName = "bmp";
+        String formatName = "png";
         File file;
 
-        if (i != 0)
+        //if (i != 0)
             file = new File("output/" + fileName + "_" + i + "." + formatName);
-        else
-            file = new File("output/test_gas." + formatName);
+        //else
+        //    file = new File("output/test_gas." + formatName);
 
         ImageIO.write(bufferedImage, formatName, file);
     }
