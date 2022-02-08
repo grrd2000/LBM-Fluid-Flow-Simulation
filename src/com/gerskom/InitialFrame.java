@@ -16,15 +16,15 @@ public class InitialFrame extends JFrame {
     JPanel eastPanel = new JPanel();
     JPanel centerPanel = new JPanel();
 
-    JTextField gameWidth = new JTextField("400");
-    JTextField gameHeight = new JTextField("300");
+    JTextField gameWidth = new JTextField("500");
+    JTextField gameHeight = new JTextField("400");
     JButton startButton = new JButton("PLAY");
 
     InitialFrame() {
         int frameWidth = 600;
         int frameHeight = 400;
         this.setSize(frameWidth, frameHeight);
-        this.setTitle("Forest Fire Simulation");
+        this.setTitle("Fluid Flow Simulation");
         this.getContentPane().setBackground(Color.DARK_GRAY);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
